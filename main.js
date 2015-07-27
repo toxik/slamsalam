@@ -13,7 +13,19 @@
     this.showSalamTimeoutId = null;
     this.stopTimeoutId = null;
 
+    this.close = function() {
+      if (this.$el.hasClass('Door--salamWantsIn')) {
+        var currentScore = parseInt($scoreHolder.html(), 10);
+        $scoreHolder.html(currentScore + 1);
+      }
+      this.$el.removeClass('Door--open Door--salamWantsIn').addClass('Door--closed');
+      clearTimeout(this.showSalamTimeoutId);
+      clearTimeout(this.stopTimeoutId);
+      this.start();
+    };
+
     this.start = function() {
+      var that = this;
       this.openTimeoutId = setTimeout(this.open.bind(this), gimmeRandom());
     };
 
@@ -34,14 +46,17 @@
       this.stopTimeoutId = null;
       clearAllTimeouts();
       $('.RightPane-message').html('Game over: Salam is in your house... :-(');
+      $('.Door').off('click');
     };
 
+    this.$el.on('click', this.close.bind(this));
   };
 
 
 
   var $leftPane = $('.LeftPane');
   var collection = [];
+  var $scoreHolder = $('#scoreHolder');
 
   var clearAllTimeouts = function() {
     var model;
