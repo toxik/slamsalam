@@ -21,7 +21,7 @@
       this.$el.removeClass('Door--open Door--salamWantsIn').addClass('Door--closed');
       clearTimeout(this.showSalamTimeoutId);
       clearTimeout(this.stopTimeoutId);
-      this.start();
+      //this.start();
     };
 
     this.start = function() {
